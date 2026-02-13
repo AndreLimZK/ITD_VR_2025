@@ -1818,7 +1818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameInputField: {fileID: 1307973867}
   passwordInputField: {fileID: 2064882964}
-  messagePanel: {fileID: 0}
+  messagePanel: {fileID: 1848696698}
   correctPassword: password123
   correctUsername: andre
   errorUI: 0
