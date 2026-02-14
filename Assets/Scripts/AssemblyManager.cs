@@ -14,6 +14,7 @@ public class AssemblyManager : MonoBehaviour
 
     void Start()
     {
+        // Disable the base grab and collider at the start of the assembly process
         baseGrab.enabled = false;
         baseCollider.enabled = false;
     }
@@ -36,14 +37,15 @@ public class AssemblyManager : MonoBehaviour
     {
         if (socketA.hasSelection && socketB.hasSelection && socketC.hasSelection && !isFinished)
         {
-            isFinished = true; // Prevents the code from running twice
+            // Makes sure the code only runs once 
+            isFinished = true;
             StartCoroutine(WaitAndComplete());
         }
     }
 
     IEnumerator WaitAndComplete()
     {
-        // Wait for a split second to let the last piece snap into the hole
+        // Wait to let the last piece snap into the hole
         yield return new WaitForSeconds(0.15f);
 
         XRSocketInteractor[] allSockets = { socketA, socketB, socketC };
@@ -53,12 +55,13 @@ public class AssemblyManager : MonoBehaviour
             var piece = socket.firstInteractableSelected as XRGrabInteractable;
             if (piece != null)
             {
+                // Parent the piece to the assembly manager and disable its grab and physics
                 piece.transform.SetParent(this.transform);
                 piece.enabled = false;
                 if (piece.TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
                 if (piece.TryGetComponent(out Collider col)) col.enabled = false;
             }
-            // KILL THE SOCKET: This ensures it can't interfere with the grab
+            // Disables the socket to ensure it can't interfere with the grab
             socket.enabled = false;
             socket.gameObject.SetActive(false);
         }
@@ -75,6 +78,8 @@ public class AssemblyManager : MonoBehaviour
         } 
 
         Debug.Log("Assembly Finished and Grabbable!");
+
+        // Enable the teleport toward the pedestal after assembly is complete
         Pedestal pedestal = FindAnyObjectByType<Pedestal>();
         if (pedestal != null && pedestal.teleportArea != null)
         {

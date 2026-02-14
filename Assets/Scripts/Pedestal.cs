@@ -34,7 +34,7 @@ public class Pedestal : MonoBehaviour
 
     void OnObjectPlaced(SelectEnterEventArgs args)
     {
-        Debug.Log("Object placed in pedestal socket. Checking for completion...");
+        Debug.Log("Object placed in pedestal socket.");
         TriggerWin();
     }
 
@@ -43,8 +43,6 @@ public class Pedestal : MonoBehaviour
         if (victoryCanvas != null)
         {
             victoryCanvas.SetActive(true);
-            
-            // Optional: Play a sound or particle effect here
             Debug.Log("Activity Successfully Completed!");
         }
     }
