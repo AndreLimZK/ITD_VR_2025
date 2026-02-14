@@ -7,6 +7,8 @@ public class TutorialManager : MonoBehaviour
     public int currentTriggerIndex = 1;
     public int currentTeleportIndex = 1;
 
+    public bool tutorialCompleted = false;
+
     public GameObject[] teleportAreas; // Assign in Inspector
     public GameObject congratsUI;
 
@@ -33,7 +35,7 @@ public class TutorialManager : MonoBehaviour
             Debug.Log("Trigger " + triggerNumber + " completed.");
             currentTriggerIndex++;
 
-            if (currentTriggerIndex > 3)
+            if (currentTriggerIndex == 3)
             {
                 EnableTeleports();
             }
@@ -63,8 +65,15 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void ComepleteTutorial()
+    {
+        tutorialCompleted = true;
+        Debug.Log("Tutorial Completed!");
+    }
+
     void ShowCongrats()
     {
         congratsUI.SetActive(true);
+        ComepleteTutorial();
     }
 }
